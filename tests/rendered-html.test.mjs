@@ -29,6 +29,7 @@ test("renders the AIRC Research Intelligence presentation", async () => {
   assert.match(html, /AIRC Research Intelligence/);
   assert.match(html, /Dalla ricerca alla/);
   assert.match(html, /OPPORTUNITÀ/);
+  assert.match(html, /Funding Opportunities/);
   assert.match(html, /Jarvis/);
 });
 
@@ -38,6 +39,7 @@ test("renders the interactive AIRC demo", async () => {
   const html = await response.text();
   assert.match(html, /Research Mission Control/);
   assert.match(html, /SCENARIO DEMO/);
+  assert.match(html, /Bandi &amp; funding/);
   assert.match(html, /Fondazione AIRC/);
   assert.match(html, /Jarvis/);
 });

@@ -10,6 +10,7 @@ const asset = (path: string) => `${publicBasePath}${path}`;
 type SectionKey =
   | "mission"
   | "research"
+  | "funding"
   | "calls"
   | "evidence"
   | "ifom"
@@ -45,6 +46,7 @@ const sections: Array<{
 }> = [
   { id: "mission", label: "Research Mission Control", subtitle: "Executive view", icon: "◎" },
   { id: "research", label: "Portfolio ricerca", subtitle: "Grant & talenti", icon: "▦" },
+  { id: "funding", label: "Bandi & funding", subtitle: "Opportunity scouting", icon: "↗" },
   { id: "calls", label: "Call & peer review", subtitle: "Selection intelligence", icon: "◇" },
   { id: "evidence", label: "Evidenze & milestone", subtitle: "Research outcomes", icon: "✦" },
   { id: "ifom", label: "IFOM & traslazione", subtitle: "Research system", icon: "⬡" },
@@ -72,7 +74,7 @@ const sectionCopy: Record<
     description: "Opportunità, azioni, rischi e alert lungo tutta la catena della missione AIRC.",
     insight: "Quattro segnali chiedono una decisione o un’azione oggi.",
     insightBody:
-      "Un risultato può generare nuovo valore; tre proposte mostrano una sinergia; il carico di review espone un gate e due milestone richiedono evidenze.",
+      "Un bando esterno richiede un go/no-go; tre proposte mostrano una sinergia; il carico di review espone un gate e due milestone richiedono evidenze.",
     source: "Grant platform · Peer review · Research outputs · CRM · Finance",
   },
   research: {
@@ -83,6 +85,15 @@ const sectionCopy: Record<
     insightBody:
       "Jarvis ha collegato obiettivi, modelli sperimentali e infrastrutture. La relazione è un suggerimento esplorativo: la valutazione scientifica resta umana.",
     source: "Grant platform · Milestone reports · Publications · Research taxonomy",
+  },
+  funding: {
+    eyebrow: "FUNDING OPPORTUNITY INTELLIGENCE",
+    title: "Bandi & funding",
+    description: "Opportunità europee, nazionali e di partnership collegate alle priorità e alla capacità reale di risposta.",
+    insight: "Un bando europeo richiede una decisione di go/no-go entro dodici giorni.",
+    insightBody:
+      "Obiettivi, capacità scientifiche e partner mostrano una forte corrispondenza. Restano da validare cofinanziamento, leadership del consorzio e carico interno.",
+    source: "Funding portals · Research strategy · Partner network · Finance · Capacity plan",
   },
   calls: {
     eyebrow: "CALL & REVIEW INTELLIGENCE",
@@ -159,6 +170,25 @@ const sectionCopy: Record<
 };
 
 const signals: Signal[] = [
+  {
+    id: "eu-funding-opportunity",
+    kind: "opportunity",
+    label: "OPPORTUNITÀ",
+    title: "Un bando europeo è compatibile con una priorità di ricerca",
+    detail: "Obiettivi allineati · partner possibili · requisiti principali coperti",
+    meta: "Decisione go/no-go",
+    action: "Prepara il go/no-go brief",
+    owner: "Direzione scientifica & Partnership",
+    deadline: "Decisione entro 12 giorni",
+    confidence: "Compatibilità 88%",
+    section: "funding",
+    sources: ["Funding portal", "Research strategy", "Partner network", "Capacity plan"],
+    why: [
+      "La priorità del bando coincide con una traiettoria già presente nel portfolio.",
+      "La rete include partner con competenze complementari e precedenti collaborazioni.",
+      "Prima di procedere vanno confermati cofinanziamento, leadership e capacità interna.",
+    ],
+  },
   {
     id: "validated-result",
     kind: "opportunity",
@@ -335,6 +365,7 @@ const roles = [
 const prompts: Record<SectionKey, string[]> = {
   mission: ["Prepara il Morning Brief", "Cosa richiede una decisione?", "Crea il brief per il board"],
   research: ["Mostra le sinergie", "Confronta le tre proposte", "Quali capacità condividono?"],
+  funding: ["Quali bandi richiedono una scelta?", "Prepara il go/no-go brief", "Mostra requisiti e partner"],
   calls: ["Mostra i gate esposti", "Prepara la mitigazione", "Verifica carichi e conflitti"],
   evidence: ["Quali evidenze mancano?", "Prepara l’evidence pack", "Attiva il risultato validato"],
   ifom: ["Mostra le capacità critiche", "Prepara il capacity brief", "Quali dipendenze emergono?"],
@@ -352,7 +383,7 @@ const kindOrder: Record<SignalKind, number> = {
   alert: 3,
 };
 
-const executiveSignalIds = ["validated-result", "portfolio-synergy", "review-load", "milestone-pack"];
+const executiveSignalIds = ["eu-funding-opportunity", "portfolio-synergy", "review-load", "milestone-pack"];
 
 function makeJarvisResponse(signal: Signal) {
   return `${signal.title}. ${signal.why[0]} Posso preparare “${signal.action}” usando ${signal.sources.length} fonti, mantenendo approvazione e responsabilità a ${signal.owner}.`;
@@ -364,7 +395,7 @@ export default function DemoWorkspace() {
   const [role, setRole] = useState("Direzione Generale");
   const [query, setQuery] = useState("");
   const [jarvisText, setJarvisText] = useState(
-    "Buongiorno. Ho collegato portfolio, peer review, milestone e relazioni. Quattro segnali meritano attenzione oggi: posso preparare il Morning Brief con fonti, owner e prossime azioni.",
+    "Buongiorno. Ho collegato bandi esterni, portfolio, peer review, milestone e relazioni. Quattro segnali meritano attenzione oggi: posso preparare il Morning Brief con fonti, owner e prossime azioni.",
   );
 
   const copy = sectionCopy[section];
@@ -438,6 +469,7 @@ export default function DemoWorkspace() {
         <div className="active-workflows">
           <div><span>WORKFLOW ATTIVI</span><b>+</b></div>
           <article><span>Review readiness</span><i><b style={{ width: "76%" }} /></i><small>2 azioni</small></article>
+          <article><span>Bandi & partnership</span><i><b style={{ width: "63%" }} /></i><small>1 decisione</small></article>
           <article><span>Evidence pack</span><i><b style={{ width: "84%" }} /></i><small>3 elementi</small></article>
           <article><span>Donor science brief</span><i><b style={{ width: "58%" }} /></i><small>1 pronto</small></article>
         </div>
@@ -562,7 +594,7 @@ export default function DemoWorkspace() {
               </div>
               <div className="mission-chain">
                 <div><i className="ready" /><span><b>Fiducia & risorse</b><small>4,5M sostenitori</small></span></div>
-                <div><i className="attention" /><span><b>Selezione</b><small>1 rischio demo</small></span></div>
+                <div><i className="attention" /><span><b>Bandi & selezione</b><small>1 opportunità · 1 rischio demo</small></span></div>
                 <div><i className="ready" /><span><b>Ricerca</b><small>676 progetti</small></span></div>
                 <div><i className="attention" /><span><b>Evidenze</b><small>2 alert demo</small></span></div>
                 <div><i className="ready" /><span><b>Comunicazione</b><small>1 opportunità demo</small></span></div>

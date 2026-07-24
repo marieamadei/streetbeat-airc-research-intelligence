@@ -8,9 +8,9 @@ const priorities = [
   {
     index: "01",
     type: "OPPORTUNITÀ",
-    title: "Un risultato validato può generare nuovo valore per la missione.",
-    detail: "Pubblicazione, grant e contenuti sono pronti per essere collegati.",
-    action: "Prepara l’evidence brief",
+    title: "Un bando europeo è compatibile con una priorità di ricerca.",
+    detail: "Obiettivi, capacità, partner e requisiti mostrano una forte corrispondenza.",
+    action: "Prepara il go/no-go brief",
     tone: "opportunity",
   },
   {
@@ -41,7 +41,7 @@ const priorities = [
 
 const missionLoop = [
   ["01", "Fiducia & risorse", "Donatori, 5×1000, lasciti, partner"],
-  ["02", "Selezione scientifica", "Call, peer review, grant"],
+  ["02", "Bandi & selezione scientifica", "Opportunità esterne, call AIRC, peer review"],
   ["03", "Portfolio di ricerca", "Progetti, talenti, IFOM, tecnologie"],
   ["04", "Evidenze & risultati", "Milestone, pubblicazioni, integrità"],
   ["05", "Comunicazione & prevenzione", "Contenuti, scuole, territorio"],
@@ -68,30 +68,36 @@ const modules = [
   },
   {
     number: "02",
+    title: "Funding Opportunities",
+    body: "Bandi europei e nazionali, partnership e cofinanziamenti ordinati per compatibilità, urgenza e capacità reale di risposta.",
+    signal: "Fit · requisiti · partner · deadline · go/no-go",
+  },
+  {
+    number: "03",
     title: "Calls & Peer Review",
     body: "Matching, carichi, conflitti e scadenze resi leggibili senza interferire con il giudizio scientifico.",
     signal: "~600 reviewer internazionali · 27 aree scientifiche",
   },
   {
-    number: "03",
+    number: "04",
     title: "Evidence & Translation",
     body: "Risultati, pubblicazioni e potenziale traslazionale collegati alle prossime azioni della missione.",
     signal: "Quasi 1.900 pubblicazioni nel 2025",
   },
   {
-    number: "04",
+    number: "05",
     title: "Funding & Supporters",
     body: "Fundraising e ricerca finalmente leggibili nella stessa catena di valore, con ruoli e permessi separati.",
     signal: "€200,8M raccolti · 4,5M sostenitori",
   },
   {
-    number: "05",
+    number: "06",
     title: "Science Communication",
     body: "Ogni evidenza validata può alimentare contenuti, prevenzione, scuole, media e relazione con i sostenitori.",
     signal: "4,37M utenti unici · 553K iscritti newsletter",
   },
   {
-    number: "06",
+    number: "07",
     title: "Risk & Governance",
     body: "Fonti, responsabilità, scadenze e approvazioni tracciate. Controllo umano sempre esplicito.",
     signal: "Integrity · GDPR · audit trail · accessi per ruolo",
@@ -109,6 +115,7 @@ const publicNumbers = [
 const sources = [
   "CRM & donor care",
   "Grant platform",
+  "Funding portals",
   "Peer review",
   "Finance & planning",
   "Research outputs",
@@ -188,8 +195,8 @@ export default function Home() {
               <div className="preview-signals">
                 <article>
                   <small>OPPORTUNITÀ</small>
-                  <b>Evidence pronta</b>
-                  <span>Prepara il brief →</span>
+                  <b>Bando compatibile</b>
+                  <span>Prepara il go/no-go →</span>
                 </article>
                 <article>
                   <small>RISCHIO</small>
@@ -351,7 +358,7 @@ export default function Home() {
         </div>
         <div className="product-content">
           <div className="section-kicker">IL PRODOTTO</div>
-          <h2>Sei intelligence space.<br /><em>Un’unica regia.</em></h2>
+          <h2>Sette intelligence space.<br /><em>Un’unica regia.</em></h2>
           <div className="module-list">
             {modules.map((module) => (
               <article key={module.number}>
